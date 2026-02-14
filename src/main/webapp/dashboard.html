@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User Dashboard</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h2>Register Complaint</h2>
+
+<form id="complaintForm">
+Category:
+<select name="category">
+<option>Exams</option>
+<option>Library</option>
+<option>Hostel</option>
+<option>Mess</option>
+<option>Transport</option>
+<option>Faculty</option>
+<option>Attendence</option>
+<option>Events</option>
+<option>Fees</option>
+<option>Others</option>
+</select>
+
+<br><br>
+
+Description:<br>
+<textarea name="description" required></textarea>
+
+<br><br>
+<button type="submit">Submit</button>
+</form>
+
+<hr>
+
+<h2>My Complaints</h2>
+
+<input id="search" placeholder="Search...">
+
+<table border="1" id="complaintTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>Category</th>
+<th>Description</th>
+<th>Status</th>
+<th>Remarks</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<div id="toast"></div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>
