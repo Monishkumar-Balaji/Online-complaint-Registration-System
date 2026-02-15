@@ -1,65 +1,274 @@
 @charset "UTF-8";
+
+/* ---------- BODY ---------- */
 body{
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 40px;
-    background:#f4f6f8;
+    margin:0;
+    height:100vh;
+    font-family:"Segoe UI", Arial, sans-serif;
+
+    background:#f7f8fa;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
+/* ---------- PAGE WRAPPER ---------- */
+.page{
+    text-align:center;
+}
+
+/* ---------- TITLE ---------- */
 h2{
-    margin-top:30px;
+    margin-bottom:18px;
+    color:#2c3e50;
 }
 
+/* ---------- FORM CARD ---------- */
 form{
-    background:white;
-    padding:20px;
-    border-radius:8px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
-    width:400px;
+    background:#fffdf8;
+    padding:32px;
+    border-radius:12px;
+    box-shadow:0 8px 28px rgba(0,0,0,0.12);
+    width:360px;
+    transition:0.25s;
 }
 
-textarea{
+form:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 35px rgba(0,0,0,0.18);
+}
+
+/* ---------- INPUT ---------- */
+input{
     width:100%;
-    height:80px;
+    padding:10px;
+    margin-top:6px;
+    margin-bottom:14px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    transition:0.2s;
 }
 
+input:focus{
+    border-color:#007bff;
+    outline:none;
+    box-shadow:0 0 4px rgba(0,123,255,0.4);
+}
+
+/* ---------- BUTTON ---------- */
 button{
-    padding:8px 14px;
+    width:100%;
+    padding:11px;
     border:none;
     border-radius:6px;
     background:#007bff;
     color:white;
+    font-weight:600;
+    font-size:15px;
     cursor:pointer;
+    transition:0.2s;
 }
 
 button:hover{
     background:#0056b3;
 }
 
+/* ---------- REGISTER LINK ---------- */
+.bottom-link{
+    display:block;
+    margin-top:15px;
+    color:#007bff;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.bottom-link:hover{
+    text-decoration:underline;
+}
+
+/* ---------- TOAST ---------- */
+#toast{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#2c3e50;
+    color:white;
+    padding:14px 18px;
+    border-radius:8px;
+    display:none;
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* ===== DASHBOARD BODY ===== */
+.dashboard-body{
+    display:block;
+    padding:30px 50px;
+    background:#f4f6f8;
+}
+/* ===== TOP BAR ===== */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+/* smaller logout button */
+.logout{
+    padding:8px 18px;
+    width:auto;
+    font-size:14px;
+    border-radius:6px;
+}
+
+/* remove big form style from logout form */
+.topbar form{
+    width:auto;
+    background:none;
+    box-shadow:none;
+    padding:0;
+}
+
+/* ===== REGISTER CARD ===== */
+.card-section{
+    background:#fffdf8;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.1);
+    width:520px;
+    margin-bottom:25px;
+}
+
+/* complaint form layout */
+.card-form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+/* label spacing */
+.card-form label{
+    font-weight:600;
+    margin-top:6px;
+}
+
+/* textarea full width */
+.card-form textarea{
+    width:100%;
+    height:80px;
+}
+
+/* ===== TABLE CARD ===== */
+table-section{
+    background:white;
+    padding:24px;
+    border-radius:12px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.1);
+
+    width:100%;
+    margin-top:20px;
+}
+/* search box */
+#search{
+    margin-bottom:15px;
+    padding:9px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    width:260px;
+}
+
+/* withdraw button */
+table button{
+    padding:6px 12px;
+    font-size:13px;
+    border-radius:6px;
+}
 table{
     width:100%;
     border-collapse:collapse;
     background:white;
 }
 
-th{
-    background:#2c3e50;
-    color:white;
+/* ===== ADMIN ANALYTICS ===== */
+.analytics-bar{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
 }
 
-th, td{
+.statBox{
+    background:#fffdf8;
+    padding:12px 18px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    min-width:120px;
+    text-align:center;
+}
+
+.statBox div{
+    font-size:12px;
+    color:#666;
+}
+
+.statBox b{
+    font-size:22px;
+}
+
+.chartBox{
+    width:220px;
+    background:white;
     padding:10px;
-    border:1px solid #ddd;
-    text-align:left;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-#toast{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#333;
-    color:white;
-    padding:14px 18px;
-    border-radius:8px;
-    display:none;
-    box-shadow:0 3px 8px rgba(0,0,0,0.3);
+/* ===== SEARCH ===== */
+.searchBox{
+    padding:9px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    width:260px;
+    margin-bottom:15px;
 }
+
+/* ===== CATEGORY MENU ===== */
+.categoryMenu{
+    display:none;
+    position:absolute;
+    background:white;
+    border:1px solid #ccc;
+    padding:8px;
+    border-radius:6px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+.categoryMenu div{
+    padding:5px;
+    cursor:pointer;
+}
+
+.categoryMenu div:hover{
+    background:#eef5ff;
+}
+
+/* ===== RESOLVED DROPDOWN ===== */
+.resolvedToggle{
+    margin-top:20px;
+    padding:10px;
+    background:#e9ecef;
+    text-align:center;
+    cursor:pointer;
+    border-radius:8px;
+    font-weight:600;
+}
+
+/* ===== STATUS COLORS ===== */
+.status-pending{ color:#e67e22; font-weight:bold; }
+.status-progress{ color:#007bff; font-weight:bold; }
+.status-resolved{ color:#27ae60; font-weight:bold; }
+.status-withdrawn{ color:#c0392b; font-weight:bold; }
+
+

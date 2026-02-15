@@ -1,0 +1,108 @@
+<!-- admin_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<meta http-equiv="Cache-Control" content="no-store"/>
+<link rel="stylesheet" href="css/style.css">
+
+<script src="js/chart.js"></script>
+<script src="js/admin.js"></script>
+</head>
+
+<body class="dashboard-body">
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <h2>Admin Dashboard</h2>
+
+    <form action="AdminLogout" method="post">
+        <button class="logout">Logout</button>
+    </form>
+</div>
+
+<!-- ANALYTICS HEADER -->
+<div class="analytics-bar">
+
+    <div class="statBox">
+        <div>Total Active</div>
+        <b id="totalCount">0</b>
+    </div>
+
+    <div class="statBox">
+        <div>Pending</div>
+        <b id="pendingCount">0</b>
+    </div>
+
+    <div class="statBox">
+        <div>In Progress</div>
+        <b id="progressCount">0</b>
+    </div>
+
+    <div class="chartBox">
+        <canvas id="categoryChart"></canvas>
+    </div>
+
+</div>
+
+<!-- SEARCH -->
+<input id="search" placeholder="Search complaints..." class="searchBox">
+
+<!-- ACTIVE TABLE -->
+<div class="table-section">
+
+<table id="table">
+<thead>
+<tr>
+<th onclick="sortById()">ID ▲▼</th>
+<th>User</th>
+<th onclick="toggleCategoryMenu()">Category ▲▼</th>
+<th>Description</th>
+<th onclick="sortByStatus()">Status ▲▼</th>
+<th>Remarks</th>
+<th onclick="sortByDate()">Date ▲▼</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+</div>
+
+<!-- CATEGORY FILTER -->
+<div id="categoryMenu" class="categoryMenu">
+<div onclick="filterCategory('All')">All</div>
+<div onclick="filterCategory('Exams')">Exams</div>
+<div onclick="filterCategory('Library')">Library</div>
+<div onclick="filterCategory('Hostel')">Hostel</div>
+<div onclick="filterCategory('Mess')">Mess</div>
+<div onclick="filterCategory('Transport')">Transport</div>
+<div onclick="filterCategory('Faculty')">Faculty</div>
+<div onclick="filterCategory('Fees')">Fees</div>
+<div onclick="filterCategory('Others')">Others</div>
+</div>
+
+<!-- RESOLVED DROPDOWN -->
+<div id="resolvedToggle" class="resolvedToggle">
+▼ Show Resolved Complaints
+</div>
+
+<div class="table-section">
+<table id="resolvedTable" style="display:none;">
+<thead>
+<tr>
+<th>ID</th>
+<th>User</th>
+<th>Category</th>
+<th>Description</th>
+<th>Status</th>
+<th>Remarks</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+</body>
+</html>

@@ -1,28 +1,54 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>User Login</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h2>User Login</h2>
+	<div class="page">
 
-<form action="UserLogin" method="post">
-
-<label>Email:</label><br>
-<input type="email" name="email" required><br><br>
-
-<label>Password:</label><br>
-<input type="password" name="password" required><br><br>
-
-<button type="submit">Login</button>
-
-</form>
-
-<br>
-<a href="register.html">New user? Register</a>
+		<h2>User Login</h2>
+		
+		<form action="UserLogin" method="post">
+		
+			<label>Email:</label>
+			<input type="email" name="email" required>
+			
+			<label>Password:</label>
+			<input type="password" name="password" required>
+			
+			<button type="submit">Login</button>
+		
+		</form>
+		
+		<a class="bottom-link" href="register.html">New user? Register</a>
+		
+		<div id="toast"></div>
+	
+	</div>
 
 </body>
+
+<script>
+	const params = new URLSearchParams(window.location.search);
+	const msg = params.get("msg");
+	
+	if(msg){
+	 let toast = document.getElementById("toast");
+	
+	 if(msg==="success") toast.innerText="Registered successfully!";
+	 if(msg==="exists") toast.innerText="User already exists!";
+	 if(msg==="error") toast.innerText="Registration error";
+	
+	 toast.style.display="block";
+	
+	 setTimeout(()=>{
+	   toast.style.display="none";
+	 },3000);
+	}
+</script>
 </html>
 		

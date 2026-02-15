@@ -26,10 +26,12 @@ public class GetUserComplaints extends HttpServlet {
         PrintWriter out=response.getWriter();
 
         HttpSession session=request.getSession(false);
+
         if(session==null || session.getAttribute("user_id")==null){
-            out.print("[]");
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
+
 
         int userId=(int)session.getAttribute("user_id");
 

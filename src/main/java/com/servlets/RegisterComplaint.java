@@ -9,7 +9,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
+
 @WebServlet("/RegisterComplaint")
+@jakarta.servlet.annotation.MultipartConfig
 public class RegisterComplaint extends HttpServlet {
 
     /**
@@ -22,7 +24,8 @@ public class RegisterComplaint extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,HttpServletResponse response)
             throws ServletException,IOException{
-
+    	
+    	request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
 
@@ -33,6 +36,7 @@ public class RegisterComplaint extends HttpServlet {
         }
 
         int userId=(int)session.getAttribute("user_id");
+        System.out.println("SESSION USER: " + session.getAttribute("user_id"));
 
         String category=request.getParameter("category");
         String description=request.getParameter("description");
@@ -49,9 +53,13 @@ public class RegisterComplaint extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con=DriverManager.getConnection(url,dbUser,dbPass);
 
-            // =========================
+            con.setAutoCommit(true);   // force commit
+
+            System.out.println("USER ID = " + userId);
+            System.out.println("CATEGORY = " + category);
+            System.out.println("DESC = " + description);
+
             // DUPLICATE CHECK
-            // =========================
             String check="SELECT id FROM complaints WHERE user_id=? AND category=? AND description=? AND status!='Withdrawn'";
             PreparedStatement psCheck=con.prepareStatement(check);
             psCheck.setInt(1,userId);
@@ -59,45 +67,44 @@ public class RegisterComplaint extends HttpServlet {
             psCheck.setString(3,description);
 
             ResultSet rsCheck=psCheck.executeQuery();
-
             if(rsCheck.next()){
                 out.print("{\"status\":\"duplicate\"}");
-                con.close();
                 return;
             }
 
-            // =========================
             // INSERT
-            // =========================
             String sql="INSERT INTO complaints(user_id,category,description) VALUES(?,?,?)";
             PreparedStatement ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1,userId);
             ps.setString(2,category);
             ps.setString(3,description);
-            ps.executeUpdate();
+
+            int rows = ps.executeUpdate();
+            System.out.println("ROWS INSERTED = " + rows);
+
+            if(rows==0){
+                out.print("{\"status\":\"error\",\"msg\":\"no rows inserted\"}");
+                return;
+            }
 
             ResultSet rs=ps.getGeneratedKeys();
-            rs.next();
+            if(!rs.next()){
+                out.print("{\"status\":\"error\",\"msg\":\"no key generated\"}");
+                return;
+            }
 
             int id=rs.getInt(1);
 
             String code="CMP-"+Year.now().getValue()+"-"+String.format("%04d",id);
-
             Timestamp created=new Timestamp(System.currentTimeMillis());
 
-            // escape text
-            String safeDesc=description.replace("\"","\\\"").replace("\n"," ");
-
-            // =========================
-            // JSON RESPONSE
-            // =========================
             out.print("{");
             out.print("\"status\":\"success\",");
             out.print("\"rawId\":"+id+",");
             out.print("\"id\":\""+code+"\",");
             out.print("\"category\":\""+category+"\",");
-            out.print("\"description\":\""+safeDesc+"\",");
+            out.print("\"description\":\""+description.replace("\"","\\\"")+"\",");
             out.print("\"statusText\":\"Pending\",");
             out.print("\"remarks\":\"\",");
             out.print("\"time\":\""+created+"\"");
@@ -107,7 +114,8 @@ public class RegisterComplaint extends HttpServlet {
 
         }catch(Exception e){
             e.printStackTrace();
-            out.print("{\"status\":\"error\"}");
+            out.print("{\"status\":\"error\",\"msg\":\""+e.getMessage().replace("\"","")+"\"}");
         }
+
     }
 }

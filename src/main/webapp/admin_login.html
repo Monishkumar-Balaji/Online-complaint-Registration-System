@@ -1,0 +1,46 @@
+<!-- admin_login.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	
+	<div class="page">
+	
+		<h2>Admin Login</h2>
+		
+		<form action="AdminLogin" method="post">
+		
+			<label>Username</label>
+			<input type="text" name="username" required>
+			
+			<label>Password</label>
+			<input type="password" name="password" required>
+			
+			<button type="submit">Login</button>
+		
+		</form>
+		
+		<a class="bottom-link" href="login.html">User Login</a>
+		
+		<div id="toast"></div>
+	
+	</div>
+
+<script>
+	const params = new URLSearchParams(window.location.search);
+	if(params.get("msg")==="error"){
+	 let t=document.getElementById("toast");
+	 t.innerText="Invalid admin credentials";
+	 t.style.display="block";
+	
+	 setTimeout(()=>{ t.style.display="none"; },3000);
+	}
+</script>
+
+</body>
+</html>

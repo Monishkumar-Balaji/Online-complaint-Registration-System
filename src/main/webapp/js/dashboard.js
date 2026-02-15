@@ -1,3 +1,4 @@
+//dashboard.js
 window.addEventListener("DOMContentLoaded", () => {
     loadComplaints();
 
@@ -39,24 +40,53 @@ function loadComplaints(){
 function submitComplaint(e){
     e.preventDefault();
 
-    let form = document.getElementById("complaintForm");
-    let formData = new FormData(form);
+    const form = document.getElementById("complaintForm");
+    const formData = new FormData(form);
+
+    // DEBUG: check what is being sent
+    console.log("CATEGORY:", formData.get("category"));
+    console.log("DESC:", formData.get("description"));
 
     fetch("RegisterComplaint", {
         method: "POST",
         body: formData
     })
     .then(res => res.json())
-	.then(data => {
+    .then(data => {
 
-	    if(data.status === "duplicate"){
-	        showToast("Duplicate complaint already submitted");
-	        return;
-	    }
+        console.log("SERVER RESPONSE:", data);
 
-	    if(data.status === "success"){
-    }});
+        if(data.status === "duplicate"){
+            showToast("Duplicate complaint already submitted");
+            return;
+        }
+
+        if(data.status === "success" || data.status === undefined){
+            showToast("Complaint submitted: " + data.id);
+
+            insertRow({
+                id: data.id,
+                rawId: data.rawId,
+                category: data.category,
+                description: data.description,
+                status: "Pending",
+                remarks: "",
+                time: data.time
+            }, true);
+
+            form.reset();
+        }
+
+        if(data.status === "error"){
+            showToast("Server rejected complaint");
+        }
+    })
+    .catch(err=>{
+        console.log(err);
+        showToast("Network error");
+    });
 }
+
 
 
 // =============================

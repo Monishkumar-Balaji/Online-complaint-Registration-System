@@ -31,14 +31,13 @@ public class UserRegister extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, dbUser, dbPass);
 
-            // check duplicate email
             String check = "SELECT id FROM users WHERE email=?";
             PreparedStatement ps1 = con.prepareStatement(check);
             ps1.setString(1, email);
             ResultSet rs = ps1.executeQuery();
 
             if (rs.next()) {
-                out.println("<h3>Email already registered</h3>");
+                response.sendRedirect("login.html?msg=exists");
                 return;
             }
 
@@ -48,16 +47,14 @@ public class UserRegister extends HttpServlet {
             ps.setString(1, name);
             ps.setString(2, email);
             ps.setString(3, password);
-
             ps.executeUpdate();
 
-            out.println("<h2>Registration successful!</h2>");
-            out.println("<a href='login.html'>Login now</a>");
-
+            response.sendRedirect("login.html?msg=success");
             con.close();
 
         } catch (Exception e) {
-            out.println(e.getMessage());
+            response.sendRedirect("login.html?msg=error");
         }
+
     }
 }
